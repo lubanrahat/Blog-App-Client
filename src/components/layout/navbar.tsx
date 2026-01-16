@@ -20,6 +20,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
+import { ModeToggle } from "./mode-toggle";
 
 interface MenuItem {
   title: string;
@@ -68,6 +69,10 @@ const Navbar = ({
       title: "About",
       url: "/about",
     },
+    {
+      title: "Deshboard",
+      url: "/deshboard",
+    },
   ],
   auth = {
     login: { title: "Login", url: "/login" },
@@ -101,6 +106,7 @@ const Navbar = ({
             </div>
           </div>
           <div className="flex gap-2">
+            <ModeToggle />
             <Button asChild variant="outline" size="sm">
               <Link href={auth.login.url}>{auth.login.title}</Link>
             </Button>
