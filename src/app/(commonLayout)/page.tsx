@@ -1,14 +1,27 @@
-import { authClient } from "@/lib/auth-client"
+import BlogCard from "@/components/modules/homepage/BlogCard";
+import { Badge } from "@/components/ui/badge";
+import { blogService } from "@/services/blog.service";
+import { BlogPost } from "@/types";
+
 
 export default async function HomePage() {
-  const session = await authClient.getSession()
-  console.log(session)
+
+  
+  const {data} = await blogService.getBlogPost({
+    search: ""
+  });
+  const posts: BlogPost[] = Array.isArray(data.data.data) ? data.data.data : [];
+
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold">Home Pages</h1>
-      <p className="mt-2 text-muted-foreground">
-        Page content goes here home pages
-      </p> 
-    </main>
-  )
+   <div>
+    <div className=" max-w-7xl mx-auto flex justify-end mt-10"><Badge className="text-sm" variant="outline">Total Post : {posts.length}</Badge></div>
+     <div className="grid grid-cols-3 px-4 gap-10 max-w-7xl mx-auto mt-10">
+      {posts.map((post: BlogPost) => {
+        return (
+          <BlogCard key={post.id} post={post} />
+        )
+      })}
+    </div>
+   </div>
+  );
 }
