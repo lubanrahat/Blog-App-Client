@@ -1,8 +1,19 @@
+"use client";
+
+import { blogService } from "@/services/blog.service";
+import React from "react";
+
 export const dynamic = "force-dynamic";
 
 export default async function AboutPage() {
   
-  await new Promise((resolve) => setTimeout(resolve, 1000 * 10));
+  const [data,setData] = React.useState(null);
+  React.useEffect(() => {
+    (async () => {
+      const {data} = await blogService.getBlogPost();
+      setData(data);
+    })();
+  }, []);
 
   return (
     <main className="container mx-auto px-4 py-8">

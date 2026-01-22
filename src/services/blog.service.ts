@@ -20,8 +20,6 @@ export const blogService = {
     try {
       const url = new URL(`${API_URL}/api/v1/post`);
 
-      // url.searchParams.append("key","value")
-
       if(params) {
         Object.entries(params).forEach(([key,value]) => {
           if(value !== undefined && value !== null && value !== "") {
@@ -41,6 +39,16 @@ export const blogService = {
       return { data, error: null };
     } catch (error) {
       console.error("getBlogPost error:", error);
+      return { data: null, error };
+    }
+  },
+  getBlogById: async (id: string) => {
+    try {
+      const res = await fetch(`${API_URL}/api/v1/post/${id}`);
+      const data = await res.json();
+      return { data, error: null };
+    } catch (error) {
+      console.error("getBlogById error:", error);
       return { data: null, error };
     }
   },
